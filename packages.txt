@@ -1,9 +1,1 @@
-streamlit
-numpy
-pandas
-cv2
-math
-matplotlib
-h5py
-tensorflow
-PIL
+python3-opencv

@@ -82,7 +82,7 @@ if uploaded_image is not None:
     
     # Predict parameters
     predictions = model.predict(X)
-    print(predictions)
+    st.echo(predictions)
     
     # Parameter b
     predictions_b = []

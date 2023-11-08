@@ -26,7 +26,7 @@ st.write('Samsung A52 (6936x9248)')
 # Upload an image
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
 
-if uploaded_imageed_image is not None:
+if uploaded_image is not None:
 
     # Check if image dimensions are larger than 1600x720
     image = Image.open(uploaded_image)

@@ -8,7 +8,7 @@ Created on Tue Nov  7 15:01:23 2023
 import streamlit as st
 import numpy as np
 import pandas as pd
-import cv2
+# import cv2
 import math
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick

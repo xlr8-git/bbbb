@@ -30,7 +30,7 @@ if uploaded_image is not None:
 
     # Check if image dimensions are larger than 1600x720
     image = PILImage.open(uploaded_image)
-    width, height = uploaded_image.size
+    width, height = image.size
 
     scale = 1
 

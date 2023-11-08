@@ -78,7 +78,7 @@ if uploaded_image is not None:
     X = tf.transpose(X, perm=[0, 2, 3, 1])
           
     # Load your pre-trained regression model
-    model = tf.keras.models.load_model('N:/H873/DATEN/ARDA/Soranzo/03_PostDoc/06_Forschung/220509_Soil_Class_CNN/03_Verwertung/03_App/CNN.h5')  # Load your regression model
+    model = tf.keras.models.load_model('CNN.h5')  # Load your regression model
     
     # Predict parameters
     predictions = model.predict(X)

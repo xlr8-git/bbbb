@@ -49,7 +49,7 @@ if uploaded_image is not None:
     new_height = int(height * scale)
             
     # Resize the image
-    resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)       
+    resized_image = image.resize((new_width, new_height), PILImage.ANTIALIAS)       
 
     # Crop the image
     image = PILImage.open(resized_image)

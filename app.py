@@ -52,10 +52,14 @@ if uploaded_image is not None:
     resized_image = image.resize((new_width, new_height),PILImage.Resampling.LANCZOS)       
 
     # Crop the image
-      
-    # Check if the image dimensions are already 400x400
-    if resized_image.size != (400, 400):
-
+    
+    # Define cropping size
+    width_crop = 400
+    height_crop = 400   
+    
+    # Check if the image dimensions are already cropped
+    if resized_image.size != (width_crop, height_crop):
+        
         # Calculate the cropping coordinates to get a square image
         width, height = resized_image.width, resized_image.height
         left = (width - width_crop) // 2

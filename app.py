@@ -86,13 +86,13 @@ if uploaded_image is not None:
     
     # Parameter b
     predictions_b = []
-    for i in predictions:
-        predictions_b.append(i[0])
+    for i in predictions[0]:
+        predictions_b.append(i)
 
     # Parameter c
     predictions_c = []
-    for i in predictions:
-        predictions_c.append(i[1])
+    for i in predictions[1]:
+        predictions_c.append(i)
 
     # Plot the curve
     st.write("Predicted particle size distribution")

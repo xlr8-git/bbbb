@@ -37,7 +37,7 @@ if width == 1800 or width == 4000:
     scale = 720/1800
 
 # Samsung A52
-if width == 6936 or width = 9248:
+if width == 6936 or width == 9248:
     # Calculate the scaling factor
     scale = 1600/9248
     

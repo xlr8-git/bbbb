@@ -52,10 +52,9 @@ if uploaded_image is not None:
     resized_image = image.resize((new_width, new_height),PILImage.Resampling.LANCZOS)       
 
     # Crop the image
-    image = PILImage.open(resized_image)
       
     # Check if the image dimensions are already 400x400
-    if image.size != (400, 400):
+    if resized_image.size != (400, 400):
 
         # Calculate the cropping coordinates to get a square image
         width, height = (400,400)
@@ -65,7 +64,7 @@ if uploaded_image is not None:
         right = left + min_dim
         lower = upper + min_dim
 
-        image = image.crop((left, upper, right, lower))
+        image = resized_image.crop((left, upper, right, lower))
 
     # Display the cropped image
     st.image(image, caption="Resized and cropped image", use_column_width=True)

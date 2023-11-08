@@ -26,44 +26,34 @@ st.write('Samsung A52 (6936x9248)')
 # Upload an image
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
 
-# Check if image dimensions are larger than 1600x720
-image = Image.open(uploaded_image)
-width, height = uploaded_image.size
+if uploaded_imageed_image is not None:
 
-scale = 1
+    # Check if image dimensions are larger than 1600x720
+    image = Image.open(uploaded_image)
+    width, height = uploaded_image.size
 
-# Motorola Edge
-if width == 1800 or width == 4000:
-    # Calculate the scaling factor
-    scale = 720/1800
+    scale = 1
 
-# Samsung A52
-if width == 6936 or width == 9248:
-    # Calculate the scaling factor
-    scale = 1600/9248
+    # Motorola Edge
+    if width == 1800 or width == 4000:
+        # Calculate the scaling factor
+        scale = 720/1800
+
+    # Samsung A52
+    if width == 6936 or width == 9248:
+        # Calculate the scaling factor
+        scale = 1600/9248
     
-# Calculate the new dimensions
-new_width = int(width * scale)
-new_height = int(height * scale)
+    # Calculate the new dimensions
+    new_width = int(width * scale)
+    new_height = int(height * scale)
             
-# Resize the image
-resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)       
+    # Resize the image
+    resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)       
 
-# Crop the image
-if resized_image is not None:
-    # Display the uploaded image
-    st.image(resized_image, caption="Resized and cropped image", use_column_width=True)
-
-    # Process the uploaded image
+    # Crop the image
     image = PILImage.open(resized_image)
-    # image = cv2.imdecode(np.fromstring(uploaded_image.read(), np.uint8), cv2.IMREAD_COLOR)
-    
-    # Perform image processing (you can replace this with your specific image analysis)
-    # For example, let's assume you want to plot a grayscale intensity curve:
-    # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # hist, bins = np.histogram(gray_image.ravel(), bins=256, range=[0, 256])
-    
-    # Crop image
+      
     # Check if the image dimensions are already 400x400
     if image.size != (400, 400):
 
@@ -75,9 +65,10 @@ if resized_image is not None:
         right = left + min_dim
         lower = upper + min_dim
 
-        # Crop the image
         image = image.crop((left, upper, right, lower))
 
+    # Display the cropped image
+    st.image(image, caption="Resized and cropped image", use_column_width=True)
 
     # Split channels
     red_channel, green_channel, blue_channel = image.split()

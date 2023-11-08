@@ -29,7 +29,7 @@ uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"]
 if uploaded_image is not None:
 
     # Check if image dimensions are larger than 1600x720
-    image = Image.open(uploaded_image)
+    image = PILImage.open(uploaded_image)
     width, height = uploaded_image.size
 
     scale = 1

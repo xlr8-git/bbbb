@@ -12,7 +12,7 @@ import pandas as pd
 import math
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
-import h5py
+# import h5py
 import tensorflow as tf
 
 from PIL import Image as PILImage

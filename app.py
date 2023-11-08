@@ -19,9 +19,9 @@ from PIL import Image as PILImage
 
 # Set page title
 st.title("Soil image to particle size distribution curve app")
-st.write('Accepted phones and resoultions:')
-st.write('Motorola Edge (1800x4000)')
-st.write('Samsung A52 (6936x9248)')
+st.write('Currently accepted smartphones and resoultions:')
+st.markdown('- Motorola Edge (1800x4000)')
+st.markdown('- Samsung A52 (6936x9248)')
 
 # Upload an image
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])

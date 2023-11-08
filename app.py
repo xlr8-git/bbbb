@@ -120,9 +120,9 @@ if uploaded_image is not None:
     b = math.exp(predictions_b[0])
     c = predictions_c[0]
     
-    plt.text(0.0012,0.95,'$y = 1 - \exp(-(d/b)^c)$')
-    plt.text(0.0012,0.88,'b = ' + str(np.round(b,3)))
-    plt.text(0.0012,0.81,'c = ' + str(np.round(c,3)))
+    plt.text(0.0012,0.94,'$y = 1 - \exp(-(d/b)^c)$')
+    plt.text(0.0012,0.86,'b = ' + str(np.round(b,3)))
+    plt.text(0.0012,0.78,'c = ' + str(np.round(c[0],3)))
     
     x = np.logspace(-3,3, num = 100)
     y = []

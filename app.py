@@ -57,20 +57,19 @@ if uploaded_image is not None:
     if resized_image.size != (400, 400):
 
         # Calculate the cropping coordinates to get a square image
-        width, height = (400,400)
-        min_dim = min(width, height)
-        left = (width - min_dim) // 2
-        upper = (height - min_dim) // 2
-        right = left + min_dim
-        lower = upper + min_dim
+        width, height = resized_image.width, resized_image.height
+        left = (width - width_crop) // 2
+        upper = (height - height_crop) // 2
+        right = left + width_crop
+        lower = upper + height_crop
 
-        image = resized_image.crop((left, upper, right, lower))
+        cropped_image = resized_image.crop((left, upper, right, lower))
 
     # Display the cropped image
-    st.image(image, caption="Resized and cropped image", use_column_width=True)
+    st.image(cropped_image, caption="Resized and cropped image", use_column_width=True)
 
     # Split channels
-    red_channel, green_channel, blue_channel = image.split()
+    red_channel, green_channel, blue_channel = cropped_image.split()
     # Import channels and normalise
     red_array = np.array(red_channel)
     green_array = np.array(green_channel)

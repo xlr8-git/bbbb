@@ -27,6 +27,7 @@ st.write('Samsung A52 (6936x9248)')
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
 
 # Check if image dimensions are larger than 1600x720
+image = Image.open(uploaded_image)
 width, height = uploaded_image.size
 
 scale = 1
@@ -48,26 +49,13 @@ new_height = int(height * scale)
 # Resize the image
 resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)       
 
-# Define cropping size
-width_crop = 400
-height_crop = 400           
-            
-# Calculate the cropping coordinates to get a square image
-width, height = image.width, image.height
-left = (width - width_crop) // 2
-upper = (height - height_crop) // 2
-right = left + width_crop
-lower = upper + height_crop
-
 # Crop the image
-cropped_image = image.crop((left, upper, right, lower))
-
-if cropped_image is not None:
+if resized_image is not None:
     # Display the uploaded image
-    st.image(cropped_image, caption="Resized and cropped image", use_column_width=True)
+    st.image(resized_image, caption="Resized and cropped image", use_column_width=True)
 
     # Process the uploaded image
-    image = PILImage.open(cropped_image)
+    image = PILImage.open(resized_image)
     # image = cv2.imdecode(np.fromstring(uploaded_image.read(), np.uint8), cv2.IMREAD_COLOR)
     
     # Perform image processing (you can replace this with your specific image analysis)

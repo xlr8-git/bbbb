@@ -19,16 +19,55 @@ from PIL import Image as PILImage
 
 # Set page title
 st.title("Soil image to particle size distribution curve app")
+st.write('Accepted phones and resoultions:')
+st.write('Motorola Edge (1800x4000)')
+st.write('Samsung A52 (6936x9248)')
 
 # Upload an image
 uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
 
-if uploaded_image is not None:
+# Check if image dimensions are larger than 1600x720
+width, height = uploaded_image.size
+
+scale = 1
+
+# Motorola Edge
+if width == 1800 or width == 4000:
+    # Calculate the scaling factor
+    scale = 720/1800
+
+# Samsung A52
+if width == 6936 or width = 9248:
+    # Calculate the scaling factor
+    scale = 1600/9248
+    
+# Calculate the new dimensions
+new_width = int(width * scale)
+new_height = int(height * scale)
+            
+# Resize the image
+resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)       
+
+# Define cropping size
+width_crop = 400
+height_crop = 400           
+            
+# Calculate the cropping coordinates to get a square image
+width, height = image.width, image.height
+left = (width - width_crop) // 2
+upper = (height - height_crop) // 2
+right = left + width_crop
+lower = upper + height_crop
+
+# Crop the image
+cropped_image = image.crop((left, upper, right, lower))
+
+if cropped_image is not None:
     # Display the uploaded image
-    st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+    st.image(cropped_image, caption="Resized and cropped image", use_column_width=True)
 
     # Process the uploaded image
-    image = PILImage.open(uploaded_image)
+    image = PILImage.open(cropped_image)
     # image = cv2.imdecode(np.fromstring(uploaded_image.read(), np.uint8), cv2.IMREAD_COLOR)
     
     # Perform image processing (you can replace this with your specific image analysis)
@@ -37,7 +76,7 @@ if uploaded_image is not None:
     # hist, bins = np.histogram(gray_image.ravel(), bins=256, range=[0, 256])
     
     # Crop image
-    # Check if the image dimensions are already 783x783
+    # Check if the image dimensions are already 400x400
     if image.size != (400, 400):
 
         # Calculate the cropping coordinates to get a square image

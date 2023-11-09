@@ -18,7 +18,7 @@ import tensorflow as tf
 from PIL import Image as PILImage
 
 # Set page title
-st.title("Soil image to particle size distribution curve app")
+st.title("Soil image to particle size distribution curve")
 st.write("developed by [Enrico Soranzo](mailto:enrico.soranzo@boku.ac.at)")
 st.write('Currently accepted smartphones and resolutions:')
 st.markdown('- Motorola Edge (1800x4000)')

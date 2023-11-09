@@ -19,7 +19,7 @@ from PIL import Image as PILImage
 
 # Set page title
 st.title("Soil image to particle size distribution curve app")
-st.sidebar.markdown('<a href="mailto:enrico.soranzo@boku.ac.at">developed by Enrico Soranzo</a>', unsafe_allow_html=True)
+st.write("developed by [Enrico Soranzo](mailto:enrico.soranzo@boku.ac.at)")
 st.write('Currently accepted smartphones and resolutions:')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')

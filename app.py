@@ -151,6 +151,7 @@ if uploaded_image is not None:
     for j in x:
         y.append(1-math.exp(-(j/b)**c))     
     plt.plot(x,y,linewidth=1,c='tab:blue')
+
     
     st.pyplot(fig)
 

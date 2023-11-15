@@ -1,7 +1,7 @@
 ---
-title: SoilClassNet2
-emoji: 🚀
-colorFrom: indigo
+title: SoilNet
+emoji: 🌍
+colorFrom: blue
 colorTo: gray
 sdk: streamlit
 sdk_version: 1.28.1

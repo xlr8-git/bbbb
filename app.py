@@ -20,7 +20,7 @@ from PIL import Image as PILImage
 # Set page title
 st.title("Soil image to particle size distribution curve")
 st.write("developed by [Enrico Soranzo](mailto:enrico.soranzo@boku.ac.at)")
-# st.image('BOKU.png', width=100)
+st.image('BOKU.png', width=100)
 st.write('Currently accepted smartphones and resolutions:')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')

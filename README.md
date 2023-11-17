@@ -1,5 +1,5 @@
 ---
-title: SoilNet
+title: grai
 emoji: 🌍
 colorFrom: blue
 colorTo: gray

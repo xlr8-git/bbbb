@@ -21,7 +21,7 @@ from PIL import Image as PILImage
 st.title("Soil image to particle size distribution curve")
 st.write("developed by [Enrico Soranzo](mailto:enrico.soranzo@boku.ac.at)")
 st.image('BOKU.png', width=100)
-st.write('Model trained with the following smartphones (resolutions):')
+st.write('The model was trained and validated with the following smartphones (resolutions):')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')
 

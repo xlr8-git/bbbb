@@ -24,9 +24,10 @@ st.image('BOKU.png', width=100)
 st.write('The model was trained and validated on pictures taken with the following smartphones (resolutions):')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')
+st.markdown('at 4.6 pixels per mm. Use with other devices or PPM may not yield optimal outcome.')
 
 # Upload an image
-uploaded_image = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
+uploaded_image = st.file_uploader("Upload a soil image", type=["jpg", "png", "jpeg"])
 
 if uploaded_image is not None:
 

@@ -1,3 +1,4 @@
+protobuf==3.20
 tensorflow-cpu~=2.10.0
 tensorflow-directml-plugin~=0.4.0.dev230202
 tensorflow-estimator~=2.10.0

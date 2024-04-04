@@ -4,6 +4,8 @@ Created on Tue Nov  7 15:01:23 2023
 
 @author: enrico
 """
+import os
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 import streamlit as st
 import numpy as np

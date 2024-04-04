@@ -1,4 +1,4 @@
-abseil-cpp<=20211102.0
+abseil-cpp
 absl-py~=1.4.0
 alabaster~=0.7.12
 altair~=5.1.2

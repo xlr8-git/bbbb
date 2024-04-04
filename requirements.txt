@@ -1,5 +1,5 @@
 tensorflow-cpu~=2.10.0
 tensorflow-directml-plugin~=0.4.0.dev230202
 tensorflow-estimator~=2.10.0
-tensorflow-intel~=2.10.0
+tensorflow-intel
 tensorflow-io-gcs-filesystem~=0.31.0

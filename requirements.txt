@@ -9,7 +9,6 @@ astunparse==1.6.3
 atomicwrites==1.4.0
 attrs==22.1.0
 autopep8==1.6.0
-aws-c-common==0.4.57
 aws-c-event-stream==0.1.6
 aws-checksums==0.1.9
 aws-sdk-cpp==1.8.185

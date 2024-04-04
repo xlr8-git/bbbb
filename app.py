@@ -71,7 +71,8 @@ if uploaded_image is not None:
         lower = upper + height_crop
 
         cropped_image = resized_image.crop((left, upper, right, lower))
-
+    else cropped_image = resized_image    
+            
     # Display the cropped image
     st.image(cropped_image, caption="Resized and cropped image", use_column_width=True)
 

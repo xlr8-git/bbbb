@@ -3,7 +3,6 @@ alabaster==0.7.12
 altair==5.1.2
 appdirs==1.4.4
 arrow==1.2.3
-arrow-cpp==11.0.0
 astroid==2.14.2
 asttokens==2.0.5
 astunparse==1.6.3

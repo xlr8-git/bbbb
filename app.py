@@ -45,7 +45,12 @@ if uploaded_image is not None:
     if width == 6936 or width == 9248:
         # Calculate the scaling factor
         scale = 1600/9248
-    
+
+    # HPC mobile phone
+    if width == 3024 or width == 4032:
+        # Calculate the scaling factor
+        scale = 552/1673
+        
     # Calculate the new dimensions
     new_width = int(width * scale)
     new_height = int(height * scale)

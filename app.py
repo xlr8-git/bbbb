@@ -23,6 +23,7 @@ st.image('BOKU.png', width=100)
 st.write('The model was trained and validated on pictures taken with the following smartphones (resolutions):')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')
+st.markdown('- Unknown (3024x4032)')
 st.markdown('Use with other devices or resolutions may not yield optimal outcome.')
 
 # Upload an image

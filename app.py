@@ -26,7 +26,7 @@ st.markdown('- Samsung A52 (6936x9248)')
 st.write('The following smartphones (resolutions) are also supported but not validated:')
 st.markdown('- Unknown (3024x4032)')
 st.write('Use with other devices or resolutions may not yield optimal outcome.')
-st.write('Contact the author if you want to extend the support to a new smartphone.')
+st.write('Please contact the author if you want to extend the support to a new smartphone.')
 
 # Upload an image
 uploaded_image = st.file_uploader("Upload a soil image", type=["jpg", "png", "jpeg"])

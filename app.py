@@ -23,9 +23,10 @@ st.image('BOKU.png', width=100)
 st.write('The model was trained and validated on pictures taken with the following smartphones (resolutions):')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')
-st.write('Downscaling to the common pixel density is also supported for the following smartphones (resolutions):')
+st.write('The following smartphones (resolutions) are also supported but not validated:')
 st.markdown('- Unknown (3024x4032)')
-st.markdown('Use with other devices or resolutions may not yield optimal outcome.')
+st.write('Use with other devices or resolutions may not yield optimal outcome.')
+st.write('Contact the author if you want to extend the support to a new smartphone.')
 
 # Upload an image
 uploaded_image = st.file_uploader("Upload a soil image", type=["jpg", "png", "jpeg"])

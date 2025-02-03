@@ -27,6 +27,8 @@ st.write('The following smartphones (resolutions) are also supported but not val
 st.markdown('- Unknown (3024x4032)')
 st.write('Use with other devices or resolutions may not yield optimal outcome.')
 st.write('Please contact the author if you want to extend the support to a new smartphone.')
+st.title("References")
+st.write(f"[Convolutional neural network prediction of the particle size distribution of soil from close-range images]({'https://doi.org/10.1016/j.sandf.2025.101575'})")
 
 # Upload an image
 uploaded_image = st.file_uploader("Upload a soil image", type=["jpg", "png", "jpeg"])

@@ -24,7 +24,7 @@ st.write('The model was trained and validated on pictures taken with the followi
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')
 st.write('The following smartphones (resolutions) are also supported but not validated:')
-st.markdown('- Unknown (3024x4032)')
+st.markdown('- iPhone 14 (3024x4032)')
 st.write('Use with other devices or resolutions may not yield optimal outcome.')
 st.write('Please contact the author if you want to extend the support to a new smartphone.')
 st.title("Reference")

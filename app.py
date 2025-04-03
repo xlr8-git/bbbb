@@ -20,6 +20,8 @@ from PIL import Image as PILImage
 st.title("Soil image to particle size distribution curve")
 st.write("developed by [Enrico Soranzo](mailto:enrico.soranzo@boku.ac.at)")
 st.image('BOKU.png', width=100)
+st.image('GRID_no_BG.png', width=100)
+st.write("Funded by the European Union under the MSCA Staff Exchanges project 101182689 [GRID](https://grid.boku.ac.at)")
 st.write('The model was trained and validated on pictures taken with the following smartphones (resolutions):')
 st.markdown('- Motorola Edge (1800x4000)')
 st.markdown('- Samsung A52 (6936x9248)')

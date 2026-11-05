@@ -1056,7 +1056,7 @@ if image_to_process is not None:
                 unsafe_allow_html=True
             )
 
-            tab_interactive, tab_publication, tab_fractions = (
+            _, tab_publication, tab_fractions = (
                 st.tabs([
                     "✨ Interactive Plotly Curve",
                     "📄 Scientific Matplotlib Plot",

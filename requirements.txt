@@ -3,4 +3,4 @@ tensorflow-cpu
 matplotlib
 plotly
 pandas0
-pillow>=9.5.0
+pillow

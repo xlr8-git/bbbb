@@ -398,129 +398,91 @@ def compute_soil_fractions(b, c):
 # Plotting Functions
 # ---------------------------------------------------------
 
-def create_plotly_psd(
-    b, c, d_vals, y_vals,
-    d10, d30, d50, d60
-):
-
+def create_plotly_psd(b, c, d_vals, y_vals, d10, d30, d50, d60):
+    """Interactive PSD plot with logarithmic particle-size axis."""
     fig = go.Figure()
 
     zones = [
-        {
-            "name": "Clay (Cl)",
-            "x0": 0.001,
-            "x1": 0.002,
-            "x_label": 0.0014,
-            "color": "rgba(219,234,254,0.45)"
-        },
-        {
-            "name": "Silt (Si)",
-            "x0": 0.002,
-            "x1": 0.063,
-            "x_label": 0.011,
-            "color": "rgba(220,252,231,0.45)"
-        },
-        {
-            "name": "Sand (Sa)",
-            "x0": 0.063,
-            "x1": 2.0,
-            "x_label": 0.35,
-            "color": "rgba(254,243,199,0.45)"
-        },
-        {
-            "name": "Gravel (Gr)",
-            "x0": 2.0,
-            "x1": 63.0,
-            "x_label": 11.0,
-            "color": "rgba(254,226,226,0.45)"
-        },
-        {
-            "name": "Cobbles (Bo)",
-            "x0": 63.0,
-            "x1": 200.0,
-            "x_label": 112.0,
-            "color": "rgba(243,244,246,0.55)"
-        }
+        ("Clay (Cl)", 0.001, 0.002, "rgba(219,234,254,0.55)"),
+        ("Silt (Si)", 0.002, 0.063, "rgba(220,252,231,0.55)"),
+        ("Sand (Sa)", 0.063, 2.0, "rgba(254,243,199,0.55)"),
+        ("Gravel (Gr)", 2.0, 63.0, "rgba(254,226,226,0.55)"),
+        ("Cobbles (Cb)", 63.0, 200.0, "rgba(243,244,246,0.65)")
     ]
 
-    for z in zones:
-
+    for name, x0, x1, color in zones:
         fig.add_vrect(
-            x0=z["x0"],
-            x1=z["x1"],
-            fillcolor=z["color"],
-            opacity=1.0,
+            x0=x0, x1=x1,
+            fillcolor=color,
             layer="below",
-            line_width=1,
-            line_color="rgba(148,163,184,0.4)"
+            line_width=0
         )
-
         fig.add_annotation(
-            x=z["x_label"],
-            y=102,
+            x=(x0 * x1) ** 0.5,
+            y=103,
             xref="x",
             yref="y",
-            text=f"<b>{z['name']}</b>",
+            text=f"<b>{name}</b>",
             showarrow=False,
-            font=dict(size=11, color="#334155")
+            font=dict(size=10, color="#334155")
         )
 
+    # Predicted percentage-finer curve
     fig.add_trace(go.Scatter(
         x=d_vals,
-        y=y_vals * 100,
+        y=np.asarray(y_vals) * 100,
         mode="lines",
         name="Predicted PSD Curve",
-        line=dict(color="#0284c7", width=3.5),
+        line=dict(color="#0284c7", width=3),
         hovertemplate=(
-            "<b>Particle size d:</b> %{x:.4f} mm"
-            "<br><b>Percent finer:</b> %{y:.1f}%"
+            "<b>Particle size:</b> %{x:.4g} mm"
+            "<br><b>Percent finer:</b> %{y:.2f}%"
             "<extra></extra>"
         )
     ))
 
-    pts = [
+    # Characteristic diameter markers (labels appear on hover to avoid overlap)
+    points = [
         ("D10", d10, 10),
         ("D30", d30, 30),
         ("D50", d50, 50),
         ("D60", d60, 60)
     ]
-
-    valid_pts = [
-        p for p in pts
+    valid_points = [
+        p for p in points
         if np.isfinite(p[1]) and 0.001 <= p[1] <= 200
     ]
 
-    if valid_pts:
-
+    if valid_points:
         fig.add_trace(go.Scatter(
-            x=[p[1] for p in valid_pts],
-            y=[p[2] for p in valid_pts],
-            mode="markers+text",
-            name="Key Diameters",
+            x=[p[1] for p in valid_points],
+            y=[p[2] for p in valid_points],
+            mode="markers",
+            name="Characteristic Diameters",
             marker=dict(
                 size=10,
                 color="#dc2626",
                 symbol="diamond",
                 line=dict(width=1.5, color="#ffffff")
             ),
-            text=[
-                f"{p[0]} = {p[1]:.3f} mm"
-                for p in valid_pts
-            ],
-            textposition="top left",
-            textfont=dict(size=11, color="#991b1b")
+            customdata=[[p[0], p[1]] for p in valid_points],
+            hovertemplate=(
+                "<b>%{customdata[0]}</b>: %{customdata[1]:.4g} mm"
+                "<br>Percent finer: %{y:.0f}%"
+                "<extra></extra>"
+            )
         ))
 
     fig.update_layout(
-        title="Particle Size Distribution (PSD) Curve",
-
+        title=dict(
+            text="Particle Size Distribution (PSD) Curve",
+            x=0.02
+        ),
         xaxis=dict(
             type="log",
-            title="Particle size d (mm)",
-            range=[
-                math.log10(0.001),
-                math.log10(200)
-            ],
+            title="Particle size, d (mm)",
+            range=[np.log10(0.001), np.log10(200)],
+            tickmode="array",
             tickvals=[
                 0.001, 0.002, 0.0063, 0.02,
                 0.063, 0.2, 0.63, 2,
@@ -531,146 +493,168 @@ def create_plotly_psd(
                 "0.063", "0.2", "0.63", "2",
                 "6.3", "20", "63", "200"
             ],
-            gridcolor="#e2e8f0"
+            showgrid=True,
+            gridcolor="#e2e8f0",
+            minor=dict(showgrid=True, gridcolor="#f1f5f9")
         ),
-
         yaxis=dict(
-            title="Percent Finer (%)",
+            title="Percent finer (%)",
             range=[0, 107],
+            tickmode="linear",
+            dtick=10,
             ticksuffix="%",
+            showgrid=True,
             gridcolor="#e2e8f0"
         ),
-
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.05,
+            y=1.08,
             xanchor="right",
             x=1
         ),
-
-        margin=dict(l=45, r=30, t=65, b=45),
-
+        margin=dict(l=65, r=30, t=95, b=60),
         plot_bgcolor="#ffffff",
         paper_bgcolor="#ffffff",
-        height=480
+        hovermode="closest",
+        height=520
     )
 
     return fig
 
 
-def create_matplotlib_psd(b, c, d_vals, y_vals):
+def create_matplotlib_psd(b, c, d_vals, y_vals, d10, d30, d50, d60):
+    """Publication-quality PSD plot with characteristic diameter guides."""
+    fig, ax = plt.subplots(figsize=(9, 5.5), dpi=180)
 
-    fig, ax = plt.subplots(
-        figsize=(6, 4),
-        dpi=220
+    zones = [
+        (0.001, 0.002, "#dbeafe", "Cl"),
+        (0.002, 0.063, "#dcfce7", "Si"),
+        (0.063, 2.0, "#fef3c7", "Sa"),
+        (2.0, 63.0, "#fee2e2", "Gr"),
+        (63.0, 200.0, "#f3f4f6", "Cb")
+    ]
+
+    for left, right, color, label in zones:
+        ax.axvspan(left, right, color=color, alpha=0.65, zorder=0)
+        ax.text(
+            np.sqrt(left * right),
+            1.025,
+            label,
+            ha="center",
+            va="bottom",
+            fontsize=9,
+            fontweight="bold",
+            transform=ax.get_xaxis_transform(),
+            clip_on=False
+        )
+
+    ax.plot(
+        d_vals,
+        y_vals,
+        color="#0284c7",
+        linewidth=2.5,
+        label="Predicted PSD Curve",
+        zorder=3
     )
 
-    ax.grid(
-        which="major",
-        linewidth=0.6,
-        color="#cbd5e1"
-    )
+    characteristic = [
+        ("D10", d10, 0.10),
+        ("D30", d30, 0.30),
+        ("D50", d50, 0.50),
+        ("D60", d60, 0.60)
+    ]
 
-    ax.grid(
-        which="minor",
-        linewidth=0.25,
-        color="#e2e8f0",
-        linestyle=":"
-    )
+    for name, diameter, probability in characteristic:
+        if np.isfinite(diameter) and 0.001 <= diameter <= 200:
+            ax.scatter(
+                diameter,
+                probability,
+                color="#dc2626",
+                edgecolor="white",
+                linewidth=0.8,
+                s=45,
+                zorder=5
+            )
+            ax.axhline(
+                probability,
+                color="#94a3b8",
+                linestyle=":",
+                linewidth=0.7,
+                zorder=1
+            )
+            ax.axvline(
+                diameter,
+                color="#94a3b8",
+                linestyle=":",
+                linewidth=0.7,
+                zorder=1
+            )
+            ax.annotate(
+                f"{name} = {diameter:.3g} mm",
+                xy=(diameter, probability),
+                xytext=(7, 7),
+                textcoords="offset points",
+                fontsize=7.5,
+                color="#991b1b"
+            )
 
-    ax.semilogx()
-
-    ax.yaxis.set_major_formatter(
-        mtick.PercentFormatter(1)
-    )
+    ax.set_xscale("log")
+    ax.set_xlim(0.001, 200)
+    ax.set_ylim(0, 1.08)
 
     ticks = [
         0.001, 0.002, 0.0063, 0.02,
         0.063, 0.2, 0.63, 2,
         6.3, 20, 63, 200
     ]
-
     ax.set_xticks(ticks)
+    ax.set_xticklabels([
+        "0.001", "0.002", "0.0063", "0.02",
+        "0.063", "0.2", "0.63", "2",
+        "6.3", "20", "63", "200"
+    ])
 
-    ax.set_xticklabels(
-        ticks,
-        fontsize=7
+    ax.yaxis.set_major_locator(mtick.MultipleLocator(0.1))
+    ax.yaxis.set_major_formatter(
+        mtick.PercentFormatter(xmax=1.0, decimals=0)
     )
 
-    ax.set_xlim([0.001, 200])
-    ax.set_ylim([0, 1.05])
-
-    ax.set_xlabel(
-        "Particle size $d$ (mm)",
-        fontsize=9
+    ax.set_xlabel("Particle size, d (mm)", fontsize=10)
+    ax.set_ylabel("Percent finer (%)", fontsize=10)
+    ax.set_title(
+        "Particle Size Distribution (PSD) Curve",
+        fontsize=13,
+        pad=22
     )
 
-    ax.set_ylabel(
-        "Finer",
-        fontsize=9
+    ax.grid(which="major", linewidth=0.6, color="#cbd5e1")
+    ax.grid(
+        which="minor",
+        linewidth=0.35,
+        color="#e2e8f0",
+        linestyle=":"
     )
+    ax.set_axisbelow(True)
 
-    for boundary in [
-        0.002, 0.063, 2.0, 63.0
-    ]:
-
-        ax.plot(
-            [boundary, boundary],
-            [0, 1],
-            c="#334155",
-            linewidth=0.8,
-            linestyle="--"
+    ax.text(
+        0.02,
+        0.96,
+        rf"$F(d)=1-\exp[-(d/b)^c]$" +
+        f"\nb = {b:.4g} mm\nc = {c:.4g}",
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
+        fontsize=8,
+        bbox=dict(
+            boxstyle="round,pad=0.35",
+            facecolor="white",
+            edgecolor="#cbd5e1",
+            alpha=0.9
         )
-
-    labels = [
-        (0.0013, "Cl"),
-        (0.011, "Si"),
-        (0.35, "Sa"),
-        (10, "Gr"),
-        (100, "Bo")
-    ]
-
-    for x, label in labels:
-
-        ax.text(
-            x, 1.01, label,
-            fontsize=8,
-            fontweight="bold",
-            color="#1e293b"
-        )
-
-    ax.text(
-        0.0012, 0.93,
-        r"$y = 1 - \exp(-(d/b)^c)$",
-        fontsize=8,
-        color="#0f172a"
-    )
-
-    ax.text(
-        0.0012, 0.85,
-        f"b = {b:.3f} mm",
-        fontsize=8,
-        color="#0369a1"
-    )
-
-    ax.text(
-        0.0012, 0.77,
-        f"c = {c:.3f}",
-        fontsize=8,
-        color="#0369a1"
-    )
-
-    ax.plot(
-        d_vals,
-        y_vals,
-        linewidth=1.8,
-        c="#0284c7",
-        label="Predicted PSD"
     )
 
     fig.tight_layout()
-
     return fig
 
 
@@ -755,7 +739,7 @@ with st.sidebar:
 
         if st.button(
             "📸 Load Sample Soil Image",
-            use_container_width=True
+            width="stretch"
         ):
 
             st.session_state["use_sample_clicked"] = True
@@ -768,7 +752,7 @@ with st.sidebar:
 
     if st.button(
         "Clear Sample Selection",
-        use_container_width=True
+        width="stretch"
     ):
 
         st.session_state["use_sample_clicked"] = False
@@ -975,7 +959,7 @@ if image_to_process is not None:
                         f"Original Photograph "
                         f"({orig_w} × {orig_h} px)"
                     ),
-                    use_container_width=True
+                    width="stretch"
                 )
 
                 st.caption(
@@ -991,7 +975,7 @@ if image_to_process is not None:
                         "Rescaled & Center-Cropped Input "
                         "to CNN (400 × 400 px)"
                     ),
-                    use_container_width=True
+                    width="stretch"
                 )
 
                 st.info(
@@ -1095,7 +1079,7 @@ if image_to_process is not None:
 
                 st.plotly_chart(
                     plotly_fig,
-                    use_container_width=True
+                    width="stretch"
                 )
 
             with tab_publication:
@@ -1104,7 +1088,11 @@ if image_to_process is not None:
                     b_val,
                     c_val,
                     d_points,
-                    y_points
+                    y_points,
+                    d10,
+                    d30,
+                    d50,
+                    d60
                 )
 
                 st.pyplot(mpl_fig)
@@ -1152,7 +1140,7 @@ if image_to_process is not None:
                     st.dataframe(
                         fraction_df,
                         hide_index=True,
-                        use_container_width=True
+                        width="stretch"
                     )
 
                 with f_col2:
@@ -1214,7 +1202,7 @@ if image_to_process is not None:
                     data=csv_data,
                     file_name="predicted_psd_curve.csv",
                     mime="text/csv",
-                    use_container_width=True
+                    width="stretch"
                 )
 
             with exp_col2:
@@ -1264,7 +1252,7 @@ if image_to_process is not None:
                     data=json_str,
                     file_name="soil_psd_analysis_report.json",
                     mime="application/json",
-                    use_container_width=True
+                    width="stretch"
                 )
 
         except Exception as e:
